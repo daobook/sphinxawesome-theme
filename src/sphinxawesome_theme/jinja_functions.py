@@ -38,16 +38,12 @@ def _get_manifest_json(app: Sphinx) -> Any:
     Returns a dictionary with this mapping.
     """
     if app.builder and app.builder.theme:  # type: ignore[attr-defined]
-        # find the first 'manifest.json' file in the theme's directories
-        for entry in app.builder.theme.get_theme_dirs()[::-1]:  # type: ignore[attr-defined] # noqa: E501,B950
+        for entry in app.builder.theme.get_theme_dirs()[::-1]:
             manifest = path.join(entry, "static", "manifest.json")
             if path.isfile(manifest):
                 with open(manifest) as m:
                     return json.load(m)
-        else:
-            return {}
-    else:
-        return {}
+    return {}
 
 
 def _make_asset_url(app: Sphinx, asset: str) -> Any:

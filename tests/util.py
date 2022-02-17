@@ -14,6 +14,4 @@ def parse_html(filename: Union[Path, str]) -> BeautifulSoup:
 
 def read_as_text(filename: Union[Path, str]) -> str:
     """Read a file as text."""
-    with open(filename) as file_handle:
-        txt = file_handle.read()
-    return txt
+    return Path(filename).read_text()

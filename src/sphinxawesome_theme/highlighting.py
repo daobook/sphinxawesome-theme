@@ -184,14 +184,13 @@ class AwesomeCodeBlock(CodeBlock):
 
     option_sec = CodeBlock.option_spec.update(new_options)
 
-    def run(self) -> List[Node]:  # noqa: C901
+    def run(self) -> List[Node]:    # noqa: C901
         """Implement option method."""
         document = self.state.document
         code = "\n".join(self.content)
         location = self.state_machine.get_source_and_line(self.lineno)
 
-        linespec = self.options.get("emphasize-lines")
-        if linespec:
+        if linespec := self.options.get("emphasize-lines"):
             try:
                 nlines = len(self.content)
                 hl_lines = parselinenos(linespec, nlines)
@@ -208,9 +207,7 @@ class AwesomeCodeBlock(CodeBlock):
         else:
             hl_lines = []
 
-        # add parsing for hl_added and hl_removed
-        linespec = self.options.get("emphasize-added")
-        if linespec:
+        if linespec := self.options.get("emphasize-added"):
             try:
                 nlines = len(self.content)
                 hl_added = parselinenos(linespec, nlines)
@@ -226,9 +223,7 @@ class AwesomeCodeBlock(CodeBlock):
         else:
             hl_added = []
 
-        # add parsing for hl_added and hl_removed
-        linespec = self.options.get("emphasize-removed")
-        if linespec:
+        if linespec := self.options.get("emphasize-removed"):
             try:
                 nlines = len(self.content)
                 hl_removed = parselinenos(linespec, nlines)
@@ -278,9 +273,7 @@ class AwesomeCodeBlock(CodeBlock):
             extra_args["hl_text"] = self.options["emphasize-text"]
         self.set_source_info(literal)
 
-        # if there is a caption, we need to wrap this node in a container
-        caption = self.options.get("caption")
-        if caption:
+        if caption := self.options.get("caption"):
             try:
                 literal = container_wrapper(self, literal, caption)
             except ValueError as exc:
